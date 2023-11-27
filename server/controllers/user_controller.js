@@ -4,15 +4,15 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const Joi = require("joi");
 
-const userValidationSchema = {
+const userValidationSchema = Joi.object({
     name: Joi.string().min(2).max(30).required(),
     username: Joi.string().min(5).max(30).required(),
     password: Joi.string().min(5).max(30).required()
-}
+});
 
 const registerUser = asyncHandler(async (req, res) => {
     const { name, username, password } = req.body;
-    const { error } = Joi.validate(req.body, userVlidationSchema);
+    const { error } = userValidationSchema.validate(req.body);
 
     if (error) {
         res.sendStatus(400);
@@ -58,7 +58,7 @@ const loginUser = asyncHandler(async (req, res) => {
         }}, process.env.ACCESS_KEY, { expiresIn: "2m" });
 
         res.cookie("jwt", accessToken, { httpOnly: true });
-        res.json({ message: "Login Successful" });
+        res.json({ message: "Login Successful", accessToken });
     } else {
         res.sendStatus(400);
         throw new Error("Username or Password invalid");
