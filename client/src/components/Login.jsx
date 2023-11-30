@@ -7,7 +7,7 @@ import UserFormInput from "components/UserFormInput";
 
 function Login({  }) {
     const formRef = useRef();
-    const { auth, setAuth }  = useAuth();
+    const { setAuth }  = useAuth();
     const navigate = useNavigate();
     
     const handleFormSubmit = async (e) => {
@@ -17,8 +17,8 @@ function Login({  }) {
         formData.forEach((value, key) => data[key] = value);
 
         try {
-            const res = await axios.post("/user/login", { ...data });
-            setAuth( {user: res.data} );
+            const res = await axios.post("/auth/login", { ...data });
+            setAuth( {user: res.data.user} );
             navigate("/chat");
         } catch (err) {
             console.error(err);

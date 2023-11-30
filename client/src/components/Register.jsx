@@ -15,7 +15,7 @@ function Register() {
         formData.forEach((value, key) => data[key] = value);
 
         try {
-            const res = await axios.post("/user/register", { ...data });
+            const res = await axios.post("/auth/register", { ...data });
             console.log(res);
             navigate("/login");
         } catch (err) {

@@ -10,7 +10,8 @@ connectDB();
 const app = express();
 
 const corsOptions = {
-    origin: "http://localhost:5173"
+    origin: "http://localhost:5173",
+    credentials: true
 }
 
 app.use(cors(corsOptions));
@@ -19,7 +20,8 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(errorHandler);
 
-app.use("/user", require("./routes/user_route"));
+app.use("/auth", require("./routes/auth_route"));
+app.use("/users", require("./routes/users_route"));
 
 app.listen(PORT, () => {
     console.log(`Server listening on PORT ${PORT}`);
