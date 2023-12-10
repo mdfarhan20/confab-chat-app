@@ -2,10 +2,10 @@ import { Link } from "react-router-dom";
 
 function Home() {
     return (
-        <main>
-            <h1>Welcome to the Chat App</h1>
-            <p>Where you can chat..</p>
-            <Link to="/login">Login</Link>
+        <main className="grow">
+            <section>
+                <h1>Create Contact Connect</h1>
+            </section>
         </main>
     );
 }

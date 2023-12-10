@@ -10,7 +10,6 @@ const sessionSchema = mongoose.Schema(
         },
         token: {
             type: String,
-            required: true
         }
     },
     {

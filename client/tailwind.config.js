@@ -5,7 +5,17 @@ export default {
     "./src/**/*.{js,jsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      borderWidth: {
+        "1": "1px"
+      },
+      maxWidth: {
+        "90": "90vw"
+      },
+      width: {
+        "base": "20rem"
+      },
+    },
   },
   plugins: [],
 }

@@ -1,24 +1,23 @@
-import axios from "api/axios";
+import useAuth from "hooks/useAuth";
 import useAxiosSecure from "hooks/useAxiosSecure";
 import { useEffect, useState } from "react";
+import SearchList from "components/SearchList";
 
-function UserSearchBar() {
+function UserSearchBar({ addContact }) {
+    const { auth } = useAuth();
     const axiosSecure = useAxiosSecure();
     const [searchString, setSearchString] = useState("");
     const [searchResult, setSearchResult] = useState([]);
 
     useEffect(() => {
         let isMounted = true;
-        const controller = new AbortController();
 
         const getUsers = async () => {
             const apiPath = `/users/search?username=${searchString}`;
             try {
-                const res = await axiosSecure.get(apiPath, {
-                    signal: controller.signal
-                });
+                const res = await axiosSecure.get(apiPath);
                 console.log(res.data)
-                isMounted && setSearchResult(res.data.users);
+                isMounted && setSearchResult(res.data.users.filter(user => user.id !== auth.user.id));
             } catch (err) {
                 console.log(err);
             }
@@ -28,17 +27,14 @@ function UserSearchBar() {
 
         return () => {
             isMounted = false;
-            controller.abort();
         }
     }, [searchString]);
 
     return (
-        <div>
+        <>
             <input type="text" onChange={(e) => setSearchString(e.target.value)} />
-            {searchResult.map(user => (
-                <p>{ user.username }</p>
-            ))}
-        </div>
+            <SearchList searchResult={searchResult} addContact={addContact} />
+        </>
     );
 }
 

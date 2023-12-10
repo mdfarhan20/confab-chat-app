@@ -5,7 +5,7 @@ import useAuth from "hooks/useAuth";
 import UserForm from "components/UserForm";
 import UserFormInput from "components/UserFormInput";
 
-function Login({  }) {
+function Login() {
     const formRef = useRef();
     const { setAuth }  = useAuth();
     const navigate = useNavigate();
@@ -26,24 +26,26 @@ function Login({  }) {
     }
 
     return (
-        <main>
-            <h1>Login</h1>
-            
-            <UserForm handleFormSubmit={handleFormSubmit} formRef={formRef}>
-                <UserFormInput 
-                    name="username"
-                    type="text"
-                />
+        <main className="grow grid place-content-center">
+            <div className="grid gap-6 w-base max-w-90">
+                <h1 className="text-3xl text-center uppercase font-semibold">Login</h1>
+                
+                <UserForm handleFormSubmit={handleFormSubmit} formRef={formRef}>
+                    <UserFormInput 
+                        name="username"
+                        type="text"
+                    />
 
-                <UserFormInput
-                    name="password"
-                    type="password"
-                />
+                    <UserFormInput
+                        name="password"
+                        type="password"
+                    />
 
-                <button type="submit">Login</button>
-            </UserForm>
+                    <button className="bg-blue-400 text-white p-2 font-semibold rounded-lg" type="submit">Login</button>
+                </UserForm>
 
-            <p>Don't have an account? <Link to="/register">Register</Link></p>
+                <p className="text-center">Don't have an account? <Link className="text-purple-600 underline" to="/register">Register</Link></p>
+            </div>
         </main>
     );
 }

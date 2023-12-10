@@ -4,9 +4,11 @@ const asyncHandler = require("express-async-handler");
 const getUsersBySearch = asyncHandler(async (req, res) => {
     const searchKey = req.query.username;
     if (!searchKey || searchKey === "")
-        return res.status(400).json({ message: "No Search Key found" });
+        return res.status(200).json({ users: [] });
 
-    const users = await User.find({ username: `${searchKey}` });
+    const regex = new RegExp(`^${searchKey.toLowerCase()}`);
+    let users = await User.find({ username: {$regex: regex} });
+    users = users.map(user => { return { id: user.id, username: user.username, name: user.name } });
     if (users)
         return res.status(200).json({ users });
     res.sendStatus(404);
