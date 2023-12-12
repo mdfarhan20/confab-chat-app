@@ -5,8 +5,8 @@ function Navbar() {
     const { auth, logout } = useAuth();
 
     return (
-        <nav className="h-14 flex justify-between items-center mx-4 md:mx-8">
-            <h1 className="text-2xl font-semibold"><Link to="/">Connect</Link></h1>
+        <nav className="h-14 flex justify-between items-center border-b-1 border-gray-200 px-4 md:px-8">
+            <h1 className="text-gray-800 text-2xl font-semibold"><Link to="/">Confab</Link></h1>
 
             { !auth.user && 
                 <ul className="flex gap-4 items-center">

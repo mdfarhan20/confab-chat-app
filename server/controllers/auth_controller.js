@@ -84,13 +84,6 @@ const logoutUser = asyncHandler(async (req, res) => {
 
     const session = await Session.findOneAndUpdate({ userId }, { token: null });
     res.status(200).json({ message: "Logout Succesful" })
-    // if (session) {
-    //     await Session.deleteOne({ userId });
-    //     res.status(200).json({ message: "Logout successful" });
-    // } else {
-    //     res.status(404);
-    //     throw new Error("User not logged in");
-    // }
 });
 
 

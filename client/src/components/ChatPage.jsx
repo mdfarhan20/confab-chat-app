@@ -1,10 +1,12 @@
 import useAuth from "hooks/useAuth";
 import { useEffect, useState } from "react";
+import { Route, Routes } from "react-router-dom";
 import useSocket from "hooks/useSocket";
+import useAxiosSecure from "hooks/useAxiosSecure";
 import UserSearchBar from "components/UserSearchBar";
 import ContactsList from "components/ContactsList";
 import Chat from "components/Chat";
-import useAxiosSecure from "hooks/useAxiosSecure";
+import NewChatOptions from "components/NewChatOptions";
 
 function ChatPage() {
     const socket = useSocket();
@@ -12,6 +14,7 @@ function ChatPage() {
     const axiosSecure = useAxiosSecure();
     const [isConnected, setIsConnected] = useState(false);
     const [contacts, setContacts] = useState([]);
+    const [currentChat, setCurrentChat] = useState({});
 
     useEffect(() => {
         console.log("Connection state:", isConnected);
@@ -49,12 +52,27 @@ function ChatPage() {
 
     return (
         <main>
-            <section>
-                <UserSearchBar addContact={addContact} />
-                <ContactsList contacts={contacts} setContacts={setContacts} />
-            </section>
+            <div className="grid max-w-screen my-4">
+                <section className="w-full">
+                    <Routes location="/chat">
+                        <Route path="/" element={
+                            <ContactsList
+                                contacts={contacts}
+                                setContacts={setContacts} 
+                            />
+                        } />
 
-            <Chat />
+                        <Route path="/newchat" element={
+                            <UserSearchBar />
+                        } />
+                    </Routes>
+                    
+                    <NewChatOptions />
+                </section>
+                <section className="w-full hidden lg:block">
+                    <Chat />
+                </section>
+            </div>
         </main>
     );
 }

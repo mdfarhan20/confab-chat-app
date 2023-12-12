@@ -26,7 +26,7 @@ const createContact = asyncHandler(async (req, res) => {
     }
 
     const room = await Room.create({ name: roomName });
-    const contact = await Contact.create({ userId: user.id, roomId: room.id, contact: contactId });
+    const contact = await Contact.create({ userId: user.id, roomId: room.id, contact: contactId }).populate("contact");
     await Contact.create({ userId: contactUser.id, roomId: room.id, contact: user.id });
 
     res.status(201).json({ message: "Contact successfully added", contact });
