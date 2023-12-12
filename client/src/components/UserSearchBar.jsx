@@ -1,11 +1,13 @@
 import useAuth from "hooks/useAuth";
 import useAxiosSecure from "hooks/useAxiosSecure";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import SearchList from "components/SearchList";
+import ContactsContext from "context/ContactsContext";
 
-function UserSearchBar({ addContact }) {
+function UserSearchBar() {
     const { auth } = useAuth();
     const axiosSecure = useAxiosSecure();
+    const { contacts, setContacts } = useContext(ContactsContext);
     const [searchString, setSearchString] = useState("");
     const [searchResult, setSearchResult] = useState([]);
 
@@ -30,9 +32,26 @@ function UserSearchBar({ addContact }) {
         }
     }, [searchString]);
 
+    const addContact = async (id) => {
+        try {
+            const res = await axiosSecure.post("/contact", {
+                contact: id
+            });
+            const updatedContacts = [...contacts, res.data.contact];
+            setContacts(updatedContacts);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
     return (
         <>
-            <input type="text" onChange={(e) => setSearchString(e.target.value)} />
+            <input 
+                type="text"
+                onChange={(e) => setSearchString(e.target.value)} 
+                placeholder="Search users"
+                className="w-full px-4 py-1 outline-none"
+            />
             <SearchList searchResult={searchResult} addContact={addContact} />
         </>
     );

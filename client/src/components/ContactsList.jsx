@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import useAxiosSecure from "hooks/useAxiosSecure";
 import Contact from "components/Contact";
+import ContactsContext from "context/ContactsContext";
 
-function ContactsList({ contacts, setContacts }) {
+function ContactsList() {
     const axiosSecure = useAxiosSecure();
+    const { contacts, setContacts } = useContext(ContactsContext);
     const [filteredContacts, setFilteredContacts] = useState([]);
 
     useEffect(() => {
@@ -26,7 +28,7 @@ function ContactsList({ contacts, setContacts }) {
     }, []);
 
     useEffect(() => {
-        console.log("Contacts is changing");
+        setFilteredContacts(contacts);
     }, [contacts]);
 
     const handleContactFilter = (e) => {
