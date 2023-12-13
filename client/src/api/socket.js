@@ -1,5 +1,5 @@
 import { io } from "socket.io-client";
 
-const socket = io("https://fuzzy-guacamole-459qqwx69x9h7pjx-3000.app.github.dev/");
+const socket = io("ws://localhost:3000");
 
 export default socket;

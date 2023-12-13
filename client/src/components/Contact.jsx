@@ -2,11 +2,11 @@ import { useContext } from "react";
 import ContactsContext from "context/ContactsContext";
 
 function Contact({ contact }) {
-    const { setCurrentChat } = useContext(ContactsContext);
+    const { setCurrentChat, setIsChatting } = useContext(ContactsContext);
 
     const handleChatSelect = () => {
         setCurrentChat(contact);
-        console.log(contact);
+        setIsChatting(true);
     }
 
     return (

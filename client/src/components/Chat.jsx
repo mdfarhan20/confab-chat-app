@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import ChatInfoHeader from "components/ChatInfoHeader";
 import ChatMessages from "components/ChatMessages";
 import ChatInput from "components/ChatInput";
@@ -9,14 +9,15 @@ function Chat() {
     const axiosSecure = useAxiosSecure();
     const { currentChat } = useContext(ContactsContext);
     const [messages, setMessages] = useState([]);
+    const chatInputRef = useRef();
 
     useEffect(() => {
         const getMessages = async () => {
-            const apiPath = "/message";
+            console.log("Chat: ", currentChat.roomId);
+            const apiPath = `/message?roomId=${currentChat.roomId}`;
             try {
-                const res = await axiosSecure.get(apiPath, {
-                    roomId: currentChat.roomId,
-                });
+                const res = await axiosSecure.get(apiPath);
+                setMessages(res.data.messages);
             } catch (err) {
                 console.log(err);
             }
@@ -25,13 +26,32 @@ function Chat() {
         getMessages();
     }, []); 
 
+    const sendMessage = async (e) => {
+        e.preventDefault();
+        const message = chatInputRef.current.value;
+        if (!message || message === "")
+            return;
+
+        const apiPath = '/message';
+        try {
+            const res = await axiosSecure.post(apiPath, {
+                body: message,
+                roomId: currentChat.roomId
+            });
+            setMessages(prev => [...prev, res.data.message]);
+            chatInputRef.current.value = "";
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
     return (
-        <div>
+        <div className="h-full flex flex-col max-h-screen">
             <ChatInfoHeader chat={currentChat} />
 
-            <ChatMessages />
-
-            <ChatInput />
+            <ChatMessages messages={messages} />
+            
+            <ChatInput sendMessage={sendMessage} chatInputRef={chatInputRef} />
         </div>
     );
 }

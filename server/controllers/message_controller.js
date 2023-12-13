@@ -4,7 +4,7 @@ const Message = require("../models/message_model");
 const Room = require("../models/room_model");
 
 const getMessages = asyncHandler(async (req, res) => {
-    const roomId = req.body.roomId;
+    const roomId = req.query.roomId;
     if (!roomId) {
         res.status(400);
         throw new Error("Room id required");
@@ -36,8 +36,8 @@ const createMessage = asyncHandler(async (req, res) => {
         throw new Error("Room does not exist");
     }
 
-    await Message.create({ body, userId, roomId });
-    res.status(201).json({ message: "Message created" });
+    const message = await Message.create({ body, userId, roomId });
+    res.status(201).json({ message });
 });
 
 module.exports = { getMessages, createMessage };

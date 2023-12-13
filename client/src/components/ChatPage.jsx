@@ -1,16 +1,18 @@
 import useAuth from "hooks/useAuth";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import useSocket from "hooks/useSocket";
 import useAxiosSecure from "hooks/useAxiosSecure";
 import Chat from "components/Chat";
 import NewChatOptions from "components/NewChatOptions";
+import ContactsContext from "context/ContactsContext";
 
 function ChatPage() {
     const socket = useSocket();
     const {  logout } = useAuth();
     const axiosSecure = useAxiosSecure();
     const [isConnected, setIsConnected] = useState(false);
+    const { isChatting, currentChat } = useContext(ContactsContext);
 
     useEffect(() => {
         console.log("Connection state:", isConnected);
@@ -34,16 +36,15 @@ function ChatPage() {
         }
     }, []);
 
-
     return (
-        <main>
-            <div className="grid max-w-screen my-4">
-                {/* <section className="w-full">
+        <main className="grow">
+            <div className="flex flex-col max-w-screen my-4 h-full">
+                <section className={`w-full ${ isChatting ? "hidden" : "" }`}>
                     <Outlet />
                     <NewChatOptions />
-                </section> */}
-                <section className="w-full lg:block">
-                    <Chat />
+                </section>
+                <section className="w-full h-full">
+                    { isChatting && <Chat />}
                 </section>
             </div>
         </main>

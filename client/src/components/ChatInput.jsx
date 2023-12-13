@@ -1,17 +1,19 @@
 import { BsFillSendFill } from "react-icons/bs";
 
-function ChatInput() {
+function ChatInput({ sendMessage, chatInputRef }) {
     return (
-        <section className="w-full flex p-4 gap-4">
+        <form className="w-full flex p-4 gap-4" onSubmit={sendMessage}>
             <input 
                 type="text"
                 placeholder="Type your message here"
+                autoFocus
+                ref={chatInputRef}
                 className="grow py-2 px-4 rounded-full outline-none bg-sky-100"
             />
-            <button>
+            <button type="submit">
                 <BsFillSendFill />
             </button>
-        </section>
+        </form>
     );
 }
 
