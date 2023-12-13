@@ -7,12 +7,9 @@ import ChatPage from "components/ChatPage";
 import UserSearchBar from "components/UserSearchBar";
 import ContactsList from "components/ContactsList";
 import AuthRequired from "components/AuthRequired";
-import useAuth from "hooks/useAuth";
 import { ContactsProvider } from "context/ContactsContext";
 
 function App() {
-
-  const { auth } = useAuth();
 
   return (
     <>

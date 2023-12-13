@@ -8,10 +8,9 @@ import NewChatOptions from "components/NewChatOptions";
 
 function ChatPage() {
     const socket = useSocket();
-    const { auth, logout } = useAuth();
+    const {  logout } = useAuth();
     const axiosSecure = useAxiosSecure();
     const [isConnected, setIsConnected] = useState(false);
-    const [currentChat, setCurrentChat] = useState({});
 
     useEffect(() => {
         console.log("Connection state:", isConnected);
@@ -39,11 +38,11 @@ function ChatPage() {
     return (
         <main>
             <div className="grid max-w-screen my-4">
-                <section className="w-full">
+                {/* <section className="w-full">
                     <Outlet />
                     <NewChatOptions />
-                </section>
-                <section className="w-full hidden lg:block">
+                </section> */}
+                <section className="w-full lg:block">
                     <Chat />
                 </section>
             </div>

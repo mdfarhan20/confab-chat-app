@@ -4,9 +4,10 @@ const ContactsContext = createContext();
 
 export function ContactsProvider({ children }) {
     const [contacts, setContacts] = useState([]);
+    const [currentChat, setCurrentChat] = useState({});
 
     return (
-        <ContactsContext.Provider value={{contacts, setContacts}}>
+        <ContactsContext.Provider value={{contacts, setContacts, currentChat, setCurrentChat}}>
             { children }
         </ContactsContext.Provider>
     );

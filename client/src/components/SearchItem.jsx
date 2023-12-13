@@ -1,13 +1,16 @@
 import { useState } from "react";
 import { HiUserAdd as AddContactIcon } from "react-icons/hi";
 import { FaUserCheck as ContactAddedIcon } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 function SearchItem({ user, addContact }) {
     const [isAdded, setIsAdded] = useState(false);
+    const navigate = useNavigate();
 
     const handleContactAddition = () => {
         setIsAdded(true);
         addContact(user.id);
+        navigate("/chat");
     }
 
     return (

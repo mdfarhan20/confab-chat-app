@@ -11,7 +11,7 @@ connectDB();
 const app = express();
 
 const corsOptions = {
-    origin: "http://localhost:5173",
+    origin: "*",
     credentials: true
 }
 
@@ -33,7 +33,7 @@ const server = app.listen(PORT, () => {
 
 const io = new Server(server, {
     cors: {
-        origin: ["http://localhost:5173"]
+        origin: "*"
     }
 });
 

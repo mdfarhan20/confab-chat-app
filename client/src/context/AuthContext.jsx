@@ -12,8 +12,8 @@ export function AuthProvider({ children }) {
     async function logout() {
         const apiPath = "/auth/logout";
         try {
-            const res = await axiosSecure.put(apiPath);
             setAuth({});
+            const res = await axiosSecure.put(apiPath);
         } catch (err) {
             console.log(err);
         } finally {
