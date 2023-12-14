@@ -17,7 +17,6 @@ const getMessages = asyncHandler(async (req, res) => {
     }
 
     const messages = await Message.find({ roomId });
-    console.log(messages);
     res.status(200).json({ messages });
 });
 

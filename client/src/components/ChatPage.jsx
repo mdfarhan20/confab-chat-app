@@ -10,7 +10,6 @@ import ContactsContext from "context/ContactsContext";
 function ChatPage() {
     const socket = useSocket();
     const {  logout } = useAuth();
-    const axiosSecure = useAxiosSecure();
     const [isConnected, setIsConnected] = useState(false);
     const { isChatting, currentChat } = useContext(ContactsContext);
 
@@ -37,14 +36,15 @@ function ChatPage() {
     }, []);
 
     return (
-        <main className="grow">
-            <div className="flex flex-col max-w-screen my-4 h-full">
-                <section className={`w-full ${ isChatting ? "hidden" : "" }`}>
+        <main className="grow overflow-hidden">
+            <div className="flex flex-col max-w-screen h-full">
+                <section className={`mt-4 w-full ${ isChatting ? "hidden" : "" }`}>
                     <Outlet />
                     <NewChatOptions />
                 </section>
                 <section className="w-full h-full">
                     { isChatting && <Chat />}
+                    
                 </section>
             </div>
         </main>

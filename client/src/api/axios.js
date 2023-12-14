@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:3000";
+const BASE_URL = "https://fuzzy-guacamole-459qqwx69x9h7pjx-3000.app.github.dev";
 
 export default axios.create({
     baseURL: BASE_URL
