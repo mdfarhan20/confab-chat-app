@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 function Navbar() {
     const { auth, logout } = useAuth();
-    const { setCurrentChat, setIsChatting } = useContext(ContactsContext); 
+    const { setCurrentChat, setIsChatting, setContacts } = useContext(ContactsContext); 
 
     const handleLogout = () => {
         setCurrentChat({});

@@ -10,11 +10,11 @@ function NewChatOptions() {
                 >
                     <button 
                         className="text-white w-max font-medium rounded-md border-1 border-slate-900 bg-blue-400 dui-btn-sm"
-                    ><Link to="/chat/newchat">New Contact</Link></button>
+                    ><Link to="/chat/new-chat">New Contact</Link></button>
 
                     <button
                         className="text-white w-full font-medium rounded-md border-1 border-slate-900 bg-blue-400 dui-btn-sm"
-                    >New Group</button>
+                    ><Link to="/chat/new-group">New Group</Link></button>
                 </div>
 
             <button

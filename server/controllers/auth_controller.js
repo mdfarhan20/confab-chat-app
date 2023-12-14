@@ -75,7 +75,6 @@ const loginUser = asyncHandler(async (req, res) => {
 });
 
 const logoutUser = asyncHandler(async (req, res) => {
-    console.log(req.user);
     const userId = req.user.id;
     if (!userId) {
         res.status(400);

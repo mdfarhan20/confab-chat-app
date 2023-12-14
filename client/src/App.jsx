@@ -8,6 +8,7 @@ import UserSearchBar from "components/UserSearchBar";
 import ContactsList from "components/ContactsList";
 import AuthRequired from "components/AuthRequired";
 import { ContactsProvider } from "context/ContactsContext";
+import NewGroupChat from "components/NewGroupChat";
 
 function App() {
 
@@ -24,7 +25,8 @@ function App() {
           <Route element={<AuthRequired />}>
             <Route path="chat" element={<ChatPage />}>
                 <Route path="" element={<ContactsList />} />
-                <Route path="newchat" element={<UserSearchBar />} />
+                <Route path="new-chat" element={<UserSearchBar />} />
+                <Route path="new-group" element={<NewGroupChat />} />
             </Route>
           </Route>
         </Routes>

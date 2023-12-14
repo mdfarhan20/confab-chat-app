@@ -2,7 +2,7 @@ import { BsFillSendFill } from "react-icons/bs";
 
 function ChatInput({ sendMessage, chatInputRef }) {
     return (
-        <form className="w-full flex p-4 gap-4" onSubmit={sendMessage}>
+        <form className="w-full flex p-4 gap-4 justify-self-end" onSubmit={sendMessage}>
             <input 
                 type="text"
                 placeholder="Type your message here"

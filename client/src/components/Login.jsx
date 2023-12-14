@@ -18,6 +18,7 @@ function Login() {
 
         try {
             const res = await axios.post("/auth/login", { ...data });
+            console.log(res.data.user)
             setAuth( {user: res.data.user} );
             navigate("/chat");
         } catch (err) {

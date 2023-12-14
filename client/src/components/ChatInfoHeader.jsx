@@ -11,7 +11,7 @@ function ChatInfoHeader({ chat }) {
     }
 
     return (
-        <section className="flex py-2 px-4 mx-4 rounded-lg bg-slate-800 gap-4 border-2 border-slate-900">
+        <section className="flex py-2 px-4 mx-4 my-2 rounded-lg bg-slate-800 gap-4 border-2 border-slate-900">
             <button onClick={handleGoBack}>
                 <IoMdArrowRoundBack size="2rem" className="fill-gray-200" />
             </button>

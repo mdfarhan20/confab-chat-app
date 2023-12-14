@@ -43,8 +43,7 @@ function ChatPage() {
                     <NewChatOptions />
                 </section>
                 <section className="w-full h-full">
-                    { isChatting && <Chat />}
-                    
+                    { isChatting && <Chat />} 
                 </section>
             </div>
         </main>

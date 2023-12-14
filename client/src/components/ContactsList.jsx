@@ -1,30 +1,26 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import useAxiosSecure from "hooks/useAxiosSecure";
 import Contact from "components/Contact";
 import ContactsContext from "context/ContactsContext";
 
 function ContactsList() {
     const axiosSecure = useAxiosSecure();
-    const { contacts, setContacts } = useContext(ContactsContext);
+    const [contacts, setContacts] = useState([]);
     const [filteredContacts, setFilteredContacts] = useState([]);
+    const { setCurrentChat, setIsChatting } = useContext(ContactsContext);
+
 
     useEffect(() => {
-        let isMounted = true;
         const fetchContacts = async () => {
             try {
                 const res = await axiosSecure.get("/contact");
-                isMounted && setContacts(res.data.contacts);
-                isMounted && setFilteredContacts(res.data.contacts);
+                setContacts(res.data.contacts);
             } catch (err) {
                 console.log(err);
             }
         }
 
         fetchContacts();
-
-        return () => {
-            isMounted = false;
-        }
     }, []);
 
     useEffect(() => {
@@ -35,6 +31,11 @@ function ContactsList() {
         const searchKey = e.target.value
         const filteredList = contacts.filter(contact => contact.contact.username.startsWith(searchKey));
         setFilteredContacts(filteredList);
+    }
+
+    const handleChatSelect = () => {
+        setCurrentChat(contact);
+        setIsChatting(true);
     }
 
     return (
@@ -50,7 +51,7 @@ function ContactsList() {
                 filteredContacts.length > 0 ?  
                     <ul className="p-4 grid gap-4">
                         {filteredContacts.map((contact) => (
-                            <Contact key={contact._id} contact={contact} />
+                            <Contact key={contact._id} contact={contact} onClick={handleChatSelect} />
                         ))}
                     </ul>
                 : <p className="text-center text-gray-400 my-4">No Contacts Found</p>
