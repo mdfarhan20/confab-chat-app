@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import HeroImage from "components/HeroImage";
+import HeroImage from "components/auth/HeroImage";
 
 function Home() {
     return (

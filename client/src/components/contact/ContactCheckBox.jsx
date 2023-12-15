@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import Contact from "components/Contact";
+import Contact from "components/contact/Contact";
 import { FaCheck } from "react-icons/fa6";
 
 function ContactCheckBox({ contact }) {

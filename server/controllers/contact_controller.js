@@ -4,7 +4,7 @@ const Contact = require("../models/contact_model");
 const asyncHandler = require("express-async-handler");
 
 const getContacts = asyncHandler(async (req, res) => {
-    const contacts = await Contact.find({ userId: req.user.id }).populate(['contact', 'roomId']);
+    const contacts = await Contact.find({ userId: req.user.id }).populate(['roomId', "contact"]);
     res.status(200).json({ contacts });
 });
 
@@ -46,11 +46,12 @@ const createGroup = asyncHandler(async (req, res) => {
 
     const room = await Room.create({ name: roomName, isGroup: true });
     const group = await Contact.create({ userId: user.id, roomId: room.id });
-    groupContacts.forEach(async (contact) => {
-        await Contact.create({ userId: contact.contact.id, roomId: room.id });
+    await groupContacts.forEach(async (contact) => {
+        console.log("Adding Contact to group");
+        await Contact.create({ userId: contact.contact._id, roomId: room.id });
     });
 
-    await group.populate("roomId");
+    await group.populate(["roomId", "contact"]);
     res.status(201).json({ message: "Group created", group });
 });
 

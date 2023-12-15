@@ -1,14 +1,14 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import Navbar from "components/Navbar";
-import Home from "components/Home";
-import Login from "components/Login";
-import Register from "components/Register";
-import ChatPage from "components/ChatPage";
-import UserSearchBar from "components/UserSearchBar";
-import ContactsList from "components/ContactsList";
-import AuthRequired from "components/AuthRequired";
+import Navbar from "components/auth/Navbar";
+import Home from "components/auth/Home";
+import Login from "components/auth/Login";
+import Register from "components/auth/Register";
+import ChatPage from "components/chat/ChatPage";
+import UserSearchBar from "components/contact/UserSearchBar";
+import ContactsList from "components/contact/ContactsList";
+import AuthRequired from "components/auth/AuthRequired";
 import { ContactsProvider } from "context/ContactsContext";
-import NewGroupChat from "components/NewGroupChat";
+import NewGroupChat from "components/chat/NewGroupChat";
 
 function App() {
 

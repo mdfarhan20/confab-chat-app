@@ -1,7 +1,7 @@
 import useAuth from "hooks/useAuth";
 import useAxiosSecure from "hooks/useAxiosSecure";
 import { useContext, useEffect, useState } from "react";
-import SearchList from "components/SearchList";
+import SearchList from "components/contact/SearchList";
 import ContactsContext from "context/ContactsContext";
 
 function UserSearchBar() {

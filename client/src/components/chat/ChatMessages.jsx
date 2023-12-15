@@ -1,4 +1,4 @@
-import Message from "components/Message";
+import Message from "components/chat/Message";
 import { useEffect, useRef } from "react";
 
 function ChatMessages({ messages }) {

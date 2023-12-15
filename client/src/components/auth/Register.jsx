@@ -1,8 +1,8 @@
 import axios from "api/axios";
 import { useRef } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import UserForm from "components/UserForm";
-import UserFormInput from "components/UserFormInput";
+import UserForm from "components/contact/UserForm";
+import UserFormInput from "components/contact/UserFormInput";
 
 function Register() {
     const formRef = useRef();

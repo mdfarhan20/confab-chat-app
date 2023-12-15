@@ -1,4 +1,4 @@
-import SearchItem from "components/SearchItem";
+import SearchItem from "components/contact/SearchItem";
 
 function SearchList({ searchResult, addContact }) {
     return (

@@ -1,11 +1,11 @@
 import { useEffect, useState, useContext } from "react";
 import useAxiosSecure from "hooks/useAxiosSecure";
-import Contact from "components/Contact";
+import Contact from "components/contact/Contact";
 import ContactsContext from "context/ContactsContext";
 
 function ContactsList() {
     const axiosSecure = useAxiosSecure();
-    const [contacts, setContacts] = useState([]);
+    const { contacts, setContacts } = useContext(ContactsContext);
     const [filteredContacts, setFilteredContacts] = useState([]);
 
     useEffect(() => {
@@ -27,7 +27,7 @@ function ContactsList() {
 
     const handleContactFilter = (e) => {
         const searchKey = e.target.value
-        const filteredList = contacts.filter(contact => contact.contact.username.startsWith(searchKey));
+        const filteredList = contacts.filter(contact => (contact.roomId.name.startsWith(searchKey) || contact.contact?.username?.startsWith(searchKey)));
         setFilteredContacts(filteredList);
     }
 

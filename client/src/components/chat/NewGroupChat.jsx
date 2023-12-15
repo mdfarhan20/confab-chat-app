@@ -1,16 +1,18 @@
 import { useState, useEffect } from "react";
 import useAxiosSecure from "hooks/useAxiosSecure";
-import ContactCheckBox from "components/ContactCheckBox";
+import ContactCheckBox from "components/contact/ContactCheckBox";
+import { useNavigate } from "react-router-dom";
 
 function NewGroupChat() {
     const axiosSecure = useAxiosSecure();
     const [contacts, setContacts] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchContacts = async () => {
             try {
                 const res = await axiosSecure.get("/contact");
-                setContacts(res.data.contacts);
+                setContacts(res.data.contacts.filter(contact => !contact.roomId.isGroup));
             } catch (err) {
                 console.log(err);
             }
@@ -24,7 +26,7 @@ function NewGroupChat() {
         const form = e.target;
         const formData = new FormData(form);
         const roomName = formData.get("group-name");
-        const contacts = JSON.parse(formData.get("group-contacts"));
+        const contacts = formData.getAll("group-contacts").map(data => JSON.parse(data));
 
         const apiPath = "/contact/group";
         try {
@@ -35,6 +37,8 @@ function NewGroupChat() {
 
         } catch (err) {
             console.log(err);
+        } finally {
+            navigate("/chat");
         }
     }
 
@@ -54,7 +58,7 @@ function NewGroupChat() {
 
                 <ul className="grid gap-4 m-4">
                     { contacts.map((contact) => (
-                        <ContactCheckBox contact={contact} />
+                        <ContactCheckBox key={contact._id} contact={contact} />
                     )) }
                 </ul>
             </form>

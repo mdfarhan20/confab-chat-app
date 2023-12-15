@@ -16,7 +16,8 @@ const getMessages = asyncHandler(async (req, res) => {
         throw new Error("Room does not exist");
     }
 
-    const messages = await Message.find({ roomId });
+    const messages = await Message.find({ roomId }).populate({path: "userId", select: "username"});
+    console.log(messages[0]);
     res.status(200).json({ messages });
 });
 

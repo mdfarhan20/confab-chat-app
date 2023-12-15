@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import ChatInfoHeader from "components/ChatInfoHeader";
-import ChatMessages from "components/ChatMessages";
-import ChatInput from "components/ChatInput";
+import ChatInfoHeader from "components/chat/ChatInfoHeader";
+import ChatMessages from "components/chat/ChatMessages";
+import ChatInput from "components/chat/ChatInput";
 import ContactsContext from "context/ContactsContext";
 import useAxiosSecure from "hooks/useAxiosSecure";
 
@@ -14,7 +14,7 @@ function Chat() {
     useEffect(() => {
         const getMessages = async () => {
             console.log("Chat: ", currentChat.roomId);
-            const apiPath = `/message?roomId=${currentChat.roomId}`;
+            const apiPath = `/message?roomId=${currentChat.roomId._id}`;
             try {
                 const res = await axiosSecure.get(apiPath);
                 setMessages(res.data.messages);
@@ -36,7 +36,7 @@ function Chat() {
         try {
             const res = await axiosSecure.post(apiPath, {
                 body: message,
-                roomId: currentChat.roomId
+                roomId: currentChat.roomId._id
             });
             setMessages(prev => [...prev, res.data.message]);
             chatInputRef.current.value = "";

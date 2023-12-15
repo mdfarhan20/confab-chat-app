@@ -2,10 +2,10 @@ import useAuth from "hooks/useAuth";
 import { useContext, useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import useSocket from "hooks/useSocket";
-import useAxiosSecure from "hooks/useAxiosSecure";
-import Chat from "components/Chat";
-import NewChatOptions from "components/NewChatOptions";
+import Chat from "components/chat/Chat";
+import NewChatOptions from "components/chat/NewChatOptions";
 import ContactsContext from "context/ContactsContext";
+import EmptyChat from "components/chat/EmptyChat";
 
 function ChatPage() {
     const socket = useSocket();
@@ -37,13 +37,14 @@ function ChatPage() {
 
     return (
         <main className="grow overflow-hidden">
-            <div className="flex flex-col max-w-screen h-full">
-                <section className={`mt-4 w-full ${ isChatting ? "hidden" : "" }`}>
+            <div className="flex flex-col max-w-screen h-full md:flex-row">
+                <section className={`md:relative mt-4 w-full ${ isChatting ? "hidden md:block" : "" }`}>
                     <Outlet />
                     <NewChatOptions />
                 </section>
-                <section className="w-full h-full">
+                <section className="w-full h-full p-4">
                     { isChatting && <Chat />} 
+                    { !isChatting && <EmptyChat />}
                 </section>
             </div>
         </main>
