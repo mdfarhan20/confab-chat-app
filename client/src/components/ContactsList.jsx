@@ -7,8 +7,6 @@ function ContactsList() {
     const axiosSecure = useAxiosSecure();
     const [contacts, setContacts] = useState([]);
     const [filteredContacts, setFilteredContacts] = useState([]);
-    const { setCurrentChat, setIsChatting } = useContext(ContactsContext);
-
 
     useEffect(() => {
         const fetchContacts = async () => {
@@ -33,11 +31,6 @@ function ContactsList() {
         setFilteredContacts(filteredList);
     }
 
-    const handleChatSelect = () => {
-        setCurrentChat(contact);
-        setIsChatting(true);
-    }
-
     return (
         <div className="w-full">
             <input 
@@ -51,7 +44,7 @@ function ContactsList() {
                 filteredContacts.length > 0 ?  
                     <ul className="p-4 grid gap-4">
                         {filteredContacts.map((contact) => (
-                            <Contact key={contact._id} contact={contact} onClick={handleChatSelect} />
+                            <Contact key={contact._id} contact={contact} />
                         ))}
                     </ul>
                 : <p className="text-center text-gray-400 my-4">No Contacts Found</p>

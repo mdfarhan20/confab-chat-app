@@ -19,22 +19,35 @@ function NewGroupChat() {
         fetchContacts();
     }, []);
 
-    const handleGroupCreation = (e) => {
+    const handleGroupCreation = async (e) => {
         e.preventDefault();
         const form = e.target;
         const formData = new FormData(form);
-        console.log(formData);
+        const roomName = formData.get("group-name");
+        const contacts = JSON.parse(formData.get("group-contacts"));
+
+        const apiPath = "/contact/group";
+        try {
+            const res = await axiosSecure.post(apiPath, {
+                contacts, roomName
+            });
+            console.log(res.data);
+
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     return (
         <div>
             <form onSubmit={handleGroupCreation}>
-                <div className="m-4 flex items-center justify-between">
+                <div className="m-4 flex items-center justify-between max-w-screen">
                     <input 
                         type="text"
+                        name="group-name"
                         placeholder="Group Name"
                         required
-                        className="grow px-4 py-2 text-lg bg-sky-100 outline-none rounded-lg mr-2" 
+                        className="grow min-w-0 px-4 py-2 text-lg bg-sky-100 outline-none rounded-lg mr-2" 
                     />
                     <button type="submit" className="border-2 rounded-lg text-white bg-slate-900 px-4 py-2">Create</button>    
                 </div>

@@ -17,7 +17,7 @@ function ContactCheckBox({ contact }) {
             <input 
                 type="checkbox"
                 name="group-contacts"
-                value={contact}
+                value={JSON.stringify(contact)}
                 ref={checkboxRef}
                 className="hidden"
             />
