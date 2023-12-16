@@ -40,7 +40,19 @@ const io = new Server(server, {
 io.on("connection", (socket) => {
     console.log(`Socket connected with ID: ${socket.id}`);
 
+    socket.on("contact-change", (room) => {
+        const rooms = [...socket.rooms];
+        rooms.forEach(room => socket.leave(room));
+        socket.join(room);
+        console.log("Room Joined", room);
+    });
+
+    socket.on("send-message", (message) => {
+        console.log("Recieved Message: ", message.body);
+        io.to(message.roomId).emit("recieve-message", message);
+    });
+
     socket.on("disconnecting", () => {
-        console.log("Socket disconnecting")
+        console.log("Socket disconnecting");
     });
 });

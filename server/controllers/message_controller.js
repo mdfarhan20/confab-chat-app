@@ -17,7 +17,6 @@ const getMessages = asyncHandler(async (req, res) => {
     }
 
     const messages = await Message.find({ roomId }).populate({path: "userId", select: "username"});
-    console.log(messages[0]);
     res.status(200).json({ messages });
 });
 
@@ -37,6 +36,7 @@ const createMessage = asyncHandler(async (req, res) => {
     }
 
     const message = await Message.create({ body, userId, roomId });
+    await message.populate({ path: "userId", select: "username" });
     res.status(201).json({ message });
 });
 

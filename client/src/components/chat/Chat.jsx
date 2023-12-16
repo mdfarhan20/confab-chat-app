@@ -4,16 +4,21 @@ import ChatMessages from "components/chat/ChatMessages";
 import ChatInput from "components/chat/ChatInput";
 import ContactsContext from "context/ContactsContext";
 import useAxiosSecure from "hooks/useAxiosSecure";
+import useSocket from "hooks/useSocket";
+import useAuth from "hooks/useAuth";
 
 function Chat() {
     const axiosSecure = useAxiosSecure();
     const { currentChat } = useContext(ContactsContext);
     const [messages, setMessages] = useState([]);
     const chatInputRef = useRef();
+    const socket = useSocket();
+    const { auth } = useAuth();
 
     useEffect(() => {
+        socket.emit("contact-change", currentChat.roomId._id);
+
         const getMessages = async () => {
-            console.log("Chat: ", currentChat.roomId);
             const apiPath = `/message?roomId=${currentChat.roomId._id}`;
             try {
                 const res = await axiosSecure.get(apiPath);
@@ -24,7 +29,19 @@ function Chat() {
         }
 
         getMessages();
-    }, []); 
+    }, [currentChat]); 
+
+    useEffect(() => {
+        let isMounted = true;
+        socket.on("recieve-message", (message) => {
+            console.log("Recieved Message");
+            isMounted && setMessages(prev => [...prev, message]);
+        });
+
+        return () => {
+            isMounted = false;
+        }
+    }, []);
 
     const sendMessage = async (e) => {
         e.preventDefault();
@@ -32,13 +49,16 @@ function Chat() {
         if (!message || message === "")
             return;
 
+        const messageData =  {
+            body: message,
+            roomId: currentChat.roomId._id,
+            userId: { _id: auth.user.id, username: auth.user.username }
+        };
+        socket.emit("send-message", messageData);
+
         const apiPath = '/message';
         try {
-            const res = await axiosSecure.post(apiPath, {
-                body: message,
-                roomId: currentChat.roomId._id
-            });
-            setMessages(prev => [...prev, res.data.message]);
+            const res = await axiosSecure.post(apiPath, messageData);
             chatInputRef.current.value = "";
         } catch (err) {
             console.log(err);
