@@ -55,11 +55,11 @@ function Chat() {
             userId: { _id: auth.user.id, username: auth.user.username }
         };
         socket.emit("send-message", messageData);
+        chatInputRef.current.value = "";
 
         const apiPath = '/message';
         try {
             const res = await axiosSecure.post(apiPath, messageData);
-            chatInputRef.current.value = "";
         } catch (err) {
             console.log(err);
         }

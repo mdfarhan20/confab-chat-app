@@ -37,8 +37,8 @@ function ChatPage() {
 
     return (
         <main className="grow overflow-hidden">
-            <div className="flex flex-col max-w-screen h-full md:flex-row">
-                <section className={`overflow-y-scroll h-full md:relative mt-4 w-full ${ isChatting ? "hidden md:block" : "" }`}>
+            <div className="flex flex-col max-w-screen h-full md:flex-row p-4">
+                <section className={`overflow-y-scroll h-full md:relative w-full ${ isChatting ? "hidden md:block" : "" }`}>
                     <Outlet />
                     <NewChatOptions />
                 </section>
