@@ -11,7 +11,11 @@ connectDB();
 const app = express();
 
 const corsOptions = {
-    origin: ["http://localhost:5173", "https://fuzzy-guacamole-459qqwx69x9h7pjx-5173.app.github.dev"],
+    origin: [
+        "https://mdfarhan20.github.io",
+        "http://localhost:5173",
+        "https://fuzzy-guacamole-459qqwx69x9h7pjx-5173.app.github.dev"
+    ],
     credentials: true
 }
 
@@ -33,7 +37,11 @@ const server = app.listen(PORT, () => {
 
 const io = new Server(server, {
     cors: {
-        origin: ["http://localhost:5173", "https://fuzzy-guacamole-459qqwx69x9h7pjx-5173.app.github.dev"]
+        origin: [
+            "https://mdfarhan20.github.io",
+            "http://localhost:5173",
+            "https://fuzzy-guacamole-459qqwx69x9h7pjx-5173.app.github.dev"
+        ]
     }
 });
 
