@@ -4,6 +4,6 @@ import jsconfigPaths from "vite-jsconfig-paths";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: "/confab-chat-app",
+  base: "/confab-chat-app/",
   plugins: [react(), jsconfigPaths()],
 })

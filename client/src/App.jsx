@@ -9,6 +9,7 @@ import ContactsList from "components/contact/ContactsList";
 import AuthRequired from "components/auth/AuthRequired";
 import { ContactsProvider } from "context/ContactsContext";
 import NewGroupChat from "components/chat/NewGroupChat";
+import Notifications from "components/auth/Notifications";
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
       <ContactsProvider>
         <Navbar />
 
+        <Notifications />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="login" element={<Login />} />

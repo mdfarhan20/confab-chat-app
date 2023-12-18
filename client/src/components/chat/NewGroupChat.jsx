@@ -1,12 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import useAxiosSecure from "hooks/useAxiosSecure";
 import ContactCheckBox from "components/contact/ContactCheckBox";
 import { useNavigate } from "react-router-dom";
+import AppContext from "context/AppContext";
 
 function NewGroupChat() {
     const axiosSecure = useAxiosSecure();
     const [contacts, setContacts] = useState([]);
     const navigate = useNavigate();
+    const { addNotification } = useContext(AppContext);
 
     useEffect(() => {
         const fetchContacts = async () => {
@@ -15,6 +17,7 @@ function NewGroupChat() {
                 setContacts(res.data.contacts.filter(contact => !contact.roomId.isGroup));
             } catch (err) {
                 console.log(err);
+                addNotification(err.response.data.message, true);
             }
         }
 
@@ -33,10 +36,10 @@ function NewGroupChat() {
             const res = await axiosSecure.post(apiPath, {
                 contacts, roomName
             });
-            console.log(res.data);
-
+            addNotification(`Group created`);
         } catch (err) {
             console.log(err);
+            addNotification(err.response.data.message, true);
         } finally {
             navigate("/chat");
         }

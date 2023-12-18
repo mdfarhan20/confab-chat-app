@@ -2,11 +2,13 @@ import { useEffect, useState, useContext } from "react";
 import useAxiosSecure from "hooks/useAxiosSecure";
 import Contact from "components/contact/Contact";
 import ContactsContext from "context/ContactsContext";
+import AppContext from "context/AppContext";
 
 function ContactsList() {
     const axiosSecure = useAxiosSecure();
     const { contacts, setContacts } = useContext(ContactsContext);
     const [filteredContacts, setFilteredContacts] = useState([]);
+    const { addNotification } = useContext(AppContext);
 
     useEffect(() => {
         const fetchContacts = async () => {
@@ -15,6 +17,7 @@ function ContactsList() {
                 setContacts(res.data.contacts);
             } catch (err) {
                 console.log(err);
+                addNotification(err.response.data.message, true);
             }
         }
 
@@ -37,12 +40,12 @@ function ContactsList() {
                 type="text"
                 placeholder="Search Contacts"
                 onChange={handleContactFilter}
-                className="w-full px-4 py-1 outline-none"
+                className="w-full px-4 py-1 outline-none mb-4"
             />
 
             { 
                 filteredContacts.length > 0 ?  
-                    <ul className="p-4 grid gap-4">
+                    <ul className="grid gap-4">
                         {filteredContacts.map((contact) => (
                             <Contact key={contact._id} contact={contact} />
                         ))}

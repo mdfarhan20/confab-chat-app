@@ -6,6 +6,7 @@ import ContactsContext from "context/ContactsContext";
 import useAxiosSecure from "hooks/useAxiosSecure";
 import useSocket from "hooks/useSocket";
 import useAuth from "hooks/useAuth";
+import AppContext from "context/AppContext";
 
 function Chat() {
     const axiosSecure = useAxiosSecure();
@@ -14,6 +15,7 @@ function Chat() {
     const chatInputRef = useRef();
     const socket = useSocket();
     const { auth } = useAuth();
+    const { addNotification } = useContext(AppContext);
 
     useEffect(() => {
         socket.emit("contact-change", currentChat.roomId._id);
@@ -25,6 +27,7 @@ function Chat() {
                 setMessages(res.data.messages);
             } catch (err) {
                 console.log(err);
+                addNotification(err.response.data.message, true);
             }
         }
 
@@ -40,6 +43,7 @@ function Chat() {
 
         return () => {
             isMounted = false;
+            socket.removeAllListeners("recieve-message");
         }
     }, []);
 
@@ -62,6 +66,7 @@ function Chat() {
             const res = await axiosSecure.post(apiPath, messageData);
         } catch (err) {
             console.log(err);
+            addNotification(err.response.data.message, true);
         }
     }
 

@@ -1,14 +1,16 @@
 import axios from "api/axios";
-import { useRef } from "react";
+import { useContext, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useAuth from "hooks/useAuth";
 import UserForm from "components/contact/UserForm";
 import UserFormInput from "components/contact/UserFormInput";
+import AppContext from "context/AppContext";
 
 function Login() {
     const formRef = useRef();
     const { setAuth }  = useAuth();
     const navigate = useNavigate();
+    const { addNotification } = useContext(AppContext);
     
     const handleFormSubmit = async (e) => {
         e.preventDefault();
@@ -19,10 +21,12 @@ function Login() {
         try {
             const res = await axios.post("/auth/login", { ...data });
             console.log(res.data.user)
-            setAuth( {user: res.data.user} );
+            setAuth({ user: res.data.user});
+            addNotification("Login Successfull");
             navigate("/chat");
         } catch (err) {
-            console.error(err);
+            addNotification(err.response.data.message, true);
+            console.error(err.response.data.message);
         }
     }
 

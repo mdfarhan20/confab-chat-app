@@ -1,11 +1,12 @@
 import { axiosSecure } from "api/axios";
 import useRefreshToken from "hooks/useRefreshToken";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useAuth from "./useAuth";
 
 function useAxiosSecure() {
     const { auth } = useAuth();
     const refresh = useRefreshToken();
+    const [test, setTest] = useState(false);
 
     useEffect(() => {
         const requestIntercept = axiosSecure.interceptors.request.use((req) => {
@@ -19,9 +20,10 @@ function useAxiosSecure() {
         const responseIntercept = axiosSecure.interceptors.response.use((res) => res,
             async (error) => {
                 console.log("response error");
-                console.log(error.response);
                 const prevRequest = error.config;
-                if (error?.response?.status === 403 && !prevRequest?.sent) {
+                if (error.response.status === 403 && !prevRequest?.sent) {
+                    console.log("Auth in response:", auth);
+                    console.log("Test in response:", test);
                     prevRequest.sent = true;
                     const newAccessToken = await refresh();
                     prevRequest.headers.Authorization = `Bearer ${newAccessToken}`;
@@ -36,7 +38,7 @@ function useAxiosSecure() {
             axiosSecure.interceptors.response.eject(responseIntercept);
         }
 
-    }, [auth, refresh]);
+    }, []);
 
     return axiosSecure;
 }

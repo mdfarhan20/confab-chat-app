@@ -23,12 +23,12 @@ app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
-app.use(errorHandler);
 
 app.use("/auth", require("./routes/auth_route"));
 app.use("/users", require("./routes/users_route"));
 app.use("/contact", require("./routes/contact_route"));
 app.use("/message", require("./routes/message_route"));
+app.use(errorHandler);
 
 const server = app.listen(PORT, () => {
     console.log(`Server listening on PORT ${PORT}`);

@@ -15,7 +15,7 @@ function Navbar() {
 
     return (
         <nav className="py-4 flex justify-between items-center border-b-1 border-gray-200 px-4 md:px-8">
-            <h1 className="text-gray-800 text-2xl font-semibold">Confab</h1>
+            <h1 className="text-gray-800 text-2xl font-semibold"><Link to="/">Confab</Link></h1>
 
             { !auth.user && 
                 <ul className="flex gap-4 items-center">

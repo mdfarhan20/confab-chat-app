@@ -1,5 +1,5 @@
 import useAxiosSecure from "hooks/useAxiosSecure";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext({});
@@ -8,6 +8,8 @@ export function AuthProvider({ children }) {
     const [auth, setAuth] = useState({});
     const axiosSecure = useAxiosSecure();
     const navigate = useNavigate();
+
+    useEffect(() => console.log("Auth:", auth), [auth]);
 
     async function logout() {
         const apiPath = "/auth/logout";

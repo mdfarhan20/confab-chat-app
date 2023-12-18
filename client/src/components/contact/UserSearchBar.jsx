@@ -3,6 +3,7 @@ import useAxiosSecure from "hooks/useAxiosSecure";
 import { useContext, useEffect, useState } from "react";
 import SearchList from "components/contact/SearchList";
 import ContactsContext from "context/ContactsContext";
+import AppContext from "context/AppContext";
 
 function UserSearchBar() {
     const { auth } = useAuth();
@@ -10,6 +11,7 @@ function UserSearchBar() {
     const { contacts, setContacts } = useContext(ContactsContext);
     const [searchString, setSearchString] = useState("");
     const [searchResult, setSearchResult] = useState([]);
+    const { addNotification } = useContext(AppContext);
 
     useEffect(() => {
         let isMounted = true;
@@ -22,6 +24,7 @@ function UserSearchBar() {
                 isMounted && setSearchResult(res.data.users.filter(user => user.id !== auth.user.id));
             } catch (err) {
                 console.log(err);
+                addNotification(err.response.data.message, true);
             }
         }
 
@@ -39,8 +42,10 @@ function UserSearchBar() {
             });
             const updatedContacts = [...contacts, res.data.contact];
             setContacts(updatedContacts);
+            addNotification("Contact added successfully");
         } catch (err) {
             console.log(err);
+            addNotification(err.response.data.message, true);
         }
     }
 

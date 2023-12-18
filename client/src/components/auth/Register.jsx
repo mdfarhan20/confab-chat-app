@@ -1,11 +1,13 @@
 import axios from "api/axios";
-import { useRef } from "react";
+import { useContext, useRef } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import UserForm from "components/contact/UserForm";
 import UserFormInput from "components/contact/UserFormInput";
+import AppContext from "context/AppContext";
 
 function Register() {
     const formRef = useRef();
+    const { addNotification } = useContext(AppContext);
     const navigate = useNavigate();
 
     const handleFormSubmit = async (e) => {
@@ -16,10 +18,11 @@ function Register() {
 
         try {
             const res = await axios.post("/auth/register", { ...data });
-            console.log(res);
+            addNotification("User resgistered successfully")
             navigate("/login");
         } catch (err) {
             console.error(err);
+            addNotification(err.response.data.message, true);
         }
     }
 

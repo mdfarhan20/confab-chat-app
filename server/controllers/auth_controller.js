@@ -116,7 +116,7 @@ function getAccessToken(user) {
         id: user.id, 
         name: user.name, 
         username: user.username 
-    }, process.env.ACCESS_TOKEN_KEY, { expiresIn: "2m" });
+    }, process.env.ACCESS_TOKEN_KEY, { expiresIn: "1m" });
 }
 
 module.exports = { registerUser, loginUser, logoutUser, refreshUser };
