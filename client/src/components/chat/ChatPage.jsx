@@ -9,7 +9,7 @@ import EmptyChat from "components/chat/EmptyChat";
 
 function ChatPage() {
     const socket = useSocket();
-    const {  logout } = useAuth();
+    const { auth, logout } = useAuth();
     const [isConnected, setIsConnected] = useState(false);
     const { isChatting } = useContext(ContactsContext);
 
@@ -28,6 +28,8 @@ function ChatPage() {
             setIsConnected(false);
             await logout();
         });
+
+        socket.emit("connected", auth.user.id);
 
         return () => {
             socket.removeAllListeners("connect");

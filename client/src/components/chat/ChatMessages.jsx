@@ -18,7 +18,6 @@ function ChatMessages({ messages }) {
             ))}
             <div ref={scrollRef}></div>
         </ul>
-        
     );
 }
 

@@ -47,13 +47,22 @@ const io = new Server(server, {
 
 io.on("connection", (socket) => {
     console.log(`Socket connected with ID: ${socket.id}`);
+    
+    socket.on("connected", (id) => {
+        socket.join(id);
+    })
 
-    socket.on("contact-change", (room) => {
+    socket.on("contact-change", (room, id) => {
         const rooms = [...socket.rooms];
         rooms.forEach(room => socket.leave(room));
         socket.join(room);
+        socket.join(id);
         console.log("Room Joined", room);
     });
+
+    socket.on("added-contact", (contactId) => {
+        io.to(contactId).emit("added-contact");
+    })
 
     socket.on("send-message", (message) => {
         console.log("Recieved Message: ", message.body);

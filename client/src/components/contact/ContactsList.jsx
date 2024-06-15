@@ -3,8 +3,10 @@ import useAxiosSecure from "hooks/useAxiosSecure";
 import Contact from "components/contact/Contact";
 import ContactsContext from "context/ContactsContext";
 import AppContext from "context/AppContext";
+import useSocket from "hooks/useSocket";
 
 function ContactsList() {
+    const socket = useSocket();
     const axiosSecure = useAxiosSecure();
     const { contacts, setContacts } = useContext(ContactsContext);
     const [filteredContacts, setFilteredContacts] = useState([]);
@@ -20,6 +22,8 @@ function ContactsList() {
                 addNotification(err.response.data.message, true);
             }
         }
+
+        socket.on("added-contact", fetchContacts);
 
         fetchContacts();
     }, []);

@@ -18,7 +18,7 @@ function Chat() {
     const { addNotification } = useContext(AppContext);
 
     useEffect(() => {
-        socket.emit("contact-change", currentChat.roomId._id);
+        socket.emit("contact-change", currentChat.roomId._id, auth.user.id);
 
         const getMessages = async () => {
             const apiPath = `/message?roomId=${currentChat.roomId._id}`;

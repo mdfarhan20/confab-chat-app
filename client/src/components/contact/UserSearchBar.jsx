@@ -4,8 +4,11 @@ import { useContext, useEffect, useState } from "react";
 import SearchList from "components/contact/SearchList";
 import ContactsContext from "context/ContactsContext";
 import AppContext from "context/AppContext";
+import socket from "api/socket";
+import useSocket from "hooks/useSocket";
 
 function UserSearchBar() {
+    const socket = useSocket();
     const { auth } = useAuth();
     const axiosSecure = useAxiosSecure();
     const { contacts, setContacts } = useContext(ContactsContext);
@@ -40,8 +43,9 @@ function UserSearchBar() {
             const res = await axiosSecure.post("/contact", {
                 contact: id
             });
-            const updatedContacts = [...contacts, res.data.contact];
-            setContacts(updatedContacts);
+            socket.emit("added-contact", id);
+            const contactRes = await axiosSecure.get("/contact");
+            setContacts(contactRes.data.contacts);
             addNotification("Contact added successfully");
         } catch (err) {
             console.log(err);

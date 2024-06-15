@@ -1,5 +1,8 @@
 import { io } from "socket.io-client";
 
-const socket = io("https://confab-subsurf.onrender.com");
+const socketURL = "https://confab-subsurf.onrender.com";
+// const socketURL = "http://localhost:3000";
+
+const socket = io(socketURL);
 
 export default socket;
